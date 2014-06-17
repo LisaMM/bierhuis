@@ -14,17 +14,7 @@
             href='${pageContext.servletContext.contextPath}/styles/default.css'>
     </head>
     <body>
-        <nav class="zonderbolletjes">
-            <ul>
-                <li><a href="<c:url value='/'/>">Welkom</a></li>
-                <li><a href="<c:url value='/brouwers'/>">
-                    Bieren van een brouwer
-                </a></li>
-                <li><a href="<c:url value='/bestellingen/winkelwagen'/>">
-                    Winkelwagen
-                </a></li>
-            </ul>
-        </nav>
+        <jsp:include page="nav.jsp"/>
         <h1>Je winkelwagentje is bevestigd als bestelbon ${bestelbon.bonNr}</h1>
     </body>
 </html>

@@ -24,6 +24,7 @@ public class Bestelbon implements Serializable {
     private String naam;
     @Valid
     private Adres adres;
+    @Valid
     private List<Bestelbonlijn> bestelbonlijnen;
     
     public Bestelbon() {}

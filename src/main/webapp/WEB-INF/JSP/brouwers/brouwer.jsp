@@ -15,17 +15,7 @@
             href='${pageContext.servletContext.contextPath}/styles/default.css'>
     </head>
     <body>
-        <nav class="zonderbolletjes">
-            <ul>
-                <li><a href="<c:url value='/'/>">Welkom</a></li>
-                <li><a href="<c:url value='/brouwers'/>">
-                    Bieren van een brouwer
-                </a></li>
-                <li><a href="<c:url value='/bestellingen/winkelwagen'/>">
-                    Winkelwagen
-                </a></li>
-            </ul>
-        </nav>
+        <jsp:include page="nav.jsp"/>
         <c:when test="${not empty brouwer}">
             <h1>${brouwer.naam} (${brouwer.gemeente})</h1>
             <ul>

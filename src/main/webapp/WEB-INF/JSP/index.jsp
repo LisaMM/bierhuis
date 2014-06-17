@@ -14,17 +14,7 @@
             href='${pageContext.servletContext.contextPath}/styles/default.css'>
     </head>
     <body>
-        <nav class="zonderbolletjes">
-            <ul>
-                <li><a href="<c:url value='/'/>">Welkom</a></li>
-                <li><a href="<c:url value='/brouwers'/>">
-                    Bieren van een brouwer
-                </a></li>
-                <li><a href="<c:url value='/bestellingen/winkelwagen'/>">
-                    Winkelwagen
-                </a></li>
-            </ul>
-        </nav>
+        <jsp:include page="nav.jsp"/>
         <h1>Welkom in het huis van de Belgische bieren</h1>
         <p>
             <img src='<c:url value='/images/bierhuis.jpg'/>' alt='bierhuis'>

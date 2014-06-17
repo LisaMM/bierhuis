@@ -118,10 +118,7 @@ public class Adres implements Serializable {
         if (!Objects.equals(this.postcode, other.postcode)) {
             return false;
         }
-        if (!Objects.equals(this.gemeente, other.gemeente)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.gemeente, other.gemeente);
     }
 
     @Override

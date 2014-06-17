@@ -9,7 +9,7 @@ package be.vdab.valueobjects;
 import be.vdab.entities.Bier;
 import java.io.Serializable;
 import java.util.Objects;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 
 /**
  *
@@ -19,6 +19,7 @@ public class Bestelbonlijn implements Serializable {
     private static final long serialVersionUID = 1L;
     private Bier bier;
     @NotNull
+    @Min(1)
     private int aantal;
     
     public Bestelbonlijn() {}
@@ -67,10 +68,7 @@ public class Bestelbonlijn implements Serializable {
         if (!Objects.equals(this.bier, other.bier)) {
             return false;
         }
-        if (this.aantal != other.aantal) {
-            return false;
-        }
-        return true;
+        return this.aantal == other.aantal;
     }
     
     
