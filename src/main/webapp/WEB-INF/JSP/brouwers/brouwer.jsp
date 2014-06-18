@@ -15,22 +15,24 @@
             href='${pageContext.servletContext.contextPath}/styles/default.css'>
     </head>
     <body>
-        <jsp:include page="nav.jsp"/>
-        <c:when test="${not empty brouwer}">
-            <h1>${brouwer.naam} (${brouwer.gemeente})</h1>
-            <ul>
-                <li><c:forEach items="${brouwer.bieren}" var="bier">
-                    <spring:url var="url" value="/bieren/{bierNr}">
-                        <spring:param name="bierNr" value="${bier.bierNr}"/>
-                    </spring:url>
-                    <a href="${url}">
-                        ${bier.naam})
-                    </a>
-                </c:forEach></li>
-            </ul>
-        </c:when>
-        <c:otherwise>
-            <div>Brouwer niet gevonden</div>
-        </c:otherwise>
+        <jsp:include page="/WEB-INF/JSP/nav.jsp"/>
+        <c:choose>
+	        <c:when test="${not empty brouwer}">
+	            <h1>${brouwer.naam} (${brouwer.adres.gemeente})</h1>
+	            <ul>
+	                <li><c:forEach items="${brouwer.bieren}" var="bier">
+	                    <spring:url var="url" value="/bieren/{bierNr}">
+	                        <spring:param name="bierNr" value="${bier.bierNr}"/>
+	                    </spring:url>
+	                    <a href="${url}">
+	                        ${bier.naam})
+	                    </a>
+	                </c:forEach></li>
+	            </ul>
+	        </c:when>
+	        <c:otherwise>
+	            <div>Brouwer niet gevonden</div>
+	        </c:otherwise>
+        </c:choose>
     </body>
 </html>

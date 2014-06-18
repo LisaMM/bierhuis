@@ -14,7 +14,7 @@
             href='${pageContext.servletContext.contextPath}/styles/default.css'>
     </head>
     <body>
-        <jsp:include page="nav.jsp"/>
+        <jsp:include page="/WEB-INF/JSP/nav.jsp"/>
         <h1>Je winkelwagentje is bevestigd als bestelbon ${bestelbon.bonNr}</h1>
     </body>
 </html>

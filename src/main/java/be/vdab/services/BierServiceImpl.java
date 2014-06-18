@@ -8,6 +8,7 @@ package be.vdab.services;
 
 import be.vdab.dao.BierDAO;
 import be.vdab.entities.Bier;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -39,4 +40,9 @@ public class BierServiceImpl implements BierService {
     public Bier read(long bierNr) {
         return bierDAO.findOne(bierNr);
     }
+
+	@Override
+	public Iterable<Bier> findByBrouwerNrLike(long brouwerNr) {
+		return bierDAO.findByBrouwerLike(brouwerNr);
+	}
 }

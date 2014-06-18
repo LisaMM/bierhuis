@@ -7,7 +7,7 @@
 package be.vdab.web;
 
 import be.vdab.entities.Brouwer;
-import be.vdab.services.BrouwerService;
+import be.vdab.services.*;
 import be.vdab.valueobjects.Adres;
 import java.math.BigDecimal;
 import java.util.Collections;
@@ -23,13 +23,16 @@ public class BrouwerControllerTest {
     private BrouwerService brouwerService;
     private Iterable<Brouwer> brouwers;
     private Brouwer brouwer;
+    private BierService bierService;
     
     @Before
     public void setUp() {
         brouwers = Collections.emptyList();
+        Collections.emptyList();
         brouwerService = Mockito.mock(BrouwerService.class);
+        bierService = Mockito.mock(BierService.class);
         Mockito.when(brouwerService.findAll()).thenReturn(brouwers);
-        brouwerController = new BrouwerController(brouwerService);
+        brouwerController = new BrouwerController(brouwerService, bierService);
         brouwer = new Brouwer("naam1", new Adres("straat1", "huisnr1", 1, 
             "gemeente1"), BigDecimal.ONE);
         Mockito.when(brouwerService.read(1L)).thenReturn(brouwer);

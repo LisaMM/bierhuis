@@ -14,17 +14,17 @@
             href='${pageContext.servletContext.contextPath}/styles/default.css'>
     </head>
     <body>
-        <jsp:include page="nav.jsp"/>
+        <jsp:include page="/WEB-INF/JSP/nav.jsp"/>
         <h1>Brouwers</h1>
         <ul>
-            <li><c:forEach items="${brouwers}" var="brouwer">
-                <c:url var="url" value="/brouwers">
+           <c:forEach items="${brouwers}" var="brouwer">
+                <li><c:url var="url" value="/brouwers">
                     <c:param name="brouwerNr" value="${brouwer.brouwerNr}"/>
                 </c:url>
                 <a href="${url}">
-                    ${brouwer.naam} (${brouwer.gemeente})
-                </a>
-            </c:forEach></li>
+                    ${brouwer.naam} (${brouwer.adres.gemeente})
+                </a><li>
+            </c:forEach>
         </ul>
     </body>
 </html>

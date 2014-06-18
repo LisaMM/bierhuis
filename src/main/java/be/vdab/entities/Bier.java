@@ -9,7 +9,10 @@ package be.vdab.entities;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
+
+import javax.persistence.*;
 import javax.validation.constraints.*;
+
 import org.springframework.format.annotation.NumberFormat;
 import org.springframework.format.annotation.NumberFormat.Style;
 
@@ -17,14 +20,22 @@ import org.springframework.format.annotation.NumberFormat.Style;
  *
  * @author dev13
  */
+@Entity
+@Table(name = "bieren")
 public class Bier implements Serializable {
     private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue
     private long bierNr;
     @NotNull
     @Size(min = 1, max = 50, message = "{Size.tekst}")
     private String naam;
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name = "brouwerNr")
     private Brouwer brouwer;
-    private String soort;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "soortNr")
+    private Soort soort;
     @NumberFormat(style = Style.PERCENT)
     @NotNull
     private BigDecimal alcohol;
@@ -34,7 +45,7 @@ public class Bier implements Serializable {
     
     public Bier() {}
 
-    public Bier(String naam, Brouwer brouwer, String soort,
+    public Bier(String naam, Brouwer brouwer, Soort soort,
             BigDecimal alcohol, BigDecimal prijs) {
         this.naam = naam;
         this.brouwer = brouwer;
@@ -43,7 +54,7 @@ public class Bier implements Serializable {
         this.prijs = prijs;
     }
     
-    public Bier(long bierNr, String naam, Brouwer brouwer, String soort,
+    public Bier(long bierNr, String naam, Brouwer brouwer, Soort soort,
             BigDecimal alcohol, BigDecimal prijs) {
         this(naam, brouwer, soort, alcohol, prijs);
         this.bierNr = bierNr;
@@ -87,21 +98,33 @@ public class Bier implements Serializable {
      * @param brouwer the brouwer to set
      */
     public void setBrouwer(Brouwer brouwer) {
+    	if (this.brouwer != null && this.brouwer.getBieren().contains(this)) {
+    		this.brouwer.removeBier(this);
+    	}
         this.brouwer = brouwer;
+        if (brouwer != null && ! brouwer.getBieren().contains(this)) {
+        	brouwer.addBier(this);
+        }
     }
 
     /**
      * @return the soort
      */
-    public String getSoort() {
+    public Soort getSoort() {
         return soort;
     }
 
     /**
      * @param soort the soort to set
      */
-    public void setSoort(String soort) {
+    public void setSoort(Soort soort) {
+    	if (this.soort != null && this.soort.getBieren().contains(this)) {
+    		this.soort.removeBier(this);
+    	}
         this.soort = soort;
+        if (soort != null && ! soort.getBieren().contains(this)) {
+        	soort.addBier(this);
+        }
     }
 
     /**
@@ -134,7 +157,7 @@ public class Bier implements Serializable {
     
     @Override
     public String toString(){
-        return String.format("%s:%d", naam, bierNr);
+        return String.format("%s:%d", bierNr, naam);
     }
 
     @Override

@@ -7,8 +7,11 @@
 package be.vdab.entities;
 
 import be.vdab.valueobjects.*;
+
 import java.io.Serializable;
 import java.util.*;
+
+import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
@@ -16,23 +19,30 @@ import javax.validation.constraints.*;
  *
  * @author dev13
  */
+@Entity
+@Table(name = "bestelbonnen")
 public class Bestelbon implements Serializable {
     private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue
     private long bonNr;
     @NotNull
     @Size(min = 1, max = 50, message = "{Size.tekst}")
     private String naam;
     @Valid
+    @Embedded
     private Adres adres;
-    @Valid
-    private List<Bestelbonlijn> bestelbonlijnen;
+    @ElementCollection
+    @CollectionTable(name = "bestelbonlijnen", 
+    	joinColumns = @JoinColumn(name = "bonNr"))
+    private Set<Bestelbonlijn> bestelbonlijnen;
     
     public Bestelbon() {}
     
     public Bestelbon(String naam, Adres adres) {
         this.naam = naam;
         this.adres = adres;
-        bestelbonlijnen = new ArrayList<>();
+        this.bestelbonlijnen = new LinkedHashSet<>();
     }
     
     public Bestelbon(long bonNr, String naam, Adres adres) {
@@ -85,15 +95,16 @@ public class Bestelbon implements Serializable {
     /**
      * @return the bestelbonlijnen
      */
-    public List<Bestelbonlijn> getBestelbonlijnen() {
-        return bestelbonlijnen;
+    public Set<Bestelbonlijn> getBestelbonlijnen() {
+        return Collections.unmodifiableSet(bestelbonlijnen);
     }
-
-    /**
-     * @param bestelbonlijnen the bestelbonlijnen to set
-     */
-    public void setBestelbonlijnen(ArrayList<Bestelbonlijn> bestelbonlijnen) {
-        this.bestelbonlijnen = bestelbonlijnen;
+    
+    public void addBestelbonlijn(Bestelbonlijn lijn) {
+    	bestelbonlijnen.add(lijn);
+    }
+    
+    public void removeBestelbonlijn(Bestelbonlijn lijn) {
+		bestelbonlijnen.remove(lijn);
     }
     
     @Override

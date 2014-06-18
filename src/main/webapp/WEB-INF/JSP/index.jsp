@@ -16,8 +16,8 @@
     <body>
         <jsp:include page="nav.jsp"/>
         <h1>Welkom in het huis van de Belgische bieren</h1>
+        <img src='<c:url value='/images/bierhuis.jpg'/>' alt='bierhuis'>
         <p>
-            <img src='<c:url value='/images/bierhuis.jpg'/>' alt='bierhuis'>
             We hebben momenteel ${aantalBieren} bieren.
         </p>
     </body>

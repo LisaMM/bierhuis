@@ -7,14 +7,18 @@
 package be.vdab.valueobjects;
 
 import be.vdab.constraints.Postcode;
+
 import java.io.Serializable;
 import java.util.Objects;
+
+import javax.persistence.Embeddable;
 import javax.validation.constraints.*;
 
 /**
  *
  * @author dev13
  */
+@Embeddable
 public class Adres implements Serializable {
     private static final long serialVersionUID = 1L;
     @NotNull

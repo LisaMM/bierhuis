@@ -7,11 +7,15 @@
 package be.vdab.entities;
 
 import be.vdab.valueobjects.Adres;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.*;
+
+import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
+
 import org.springframework.format.annotation.NumberFormat;
 import org.springframework.format.annotation.NumberFormat.Style;
 
@@ -19,18 +23,24 @@ import org.springframework.format.annotation.NumberFormat.Style;
  *
  * @author dev13
  */
+@Entity
+@Table(name = "brouwers")
 public class Brouwer implements Serializable {
     private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue
     private long brouwerNr;
     @NotNull
     @Size(min = 1, max = 50, message = "{Size.tekst}")
     private String naam;
     @Valid
+    @Embedded
     private Adres adres;
     @NumberFormat(style = Style.CURRENCY)
     @NotNull
     private BigDecimal omzet;
-    private List<Bier> bieren;
+    @OneToMany(mappedBy = "brouwer")
+    private Set<Bier> bieren;
     
     public Brouwer() {}
     
@@ -38,7 +48,7 @@ public class Brouwer implements Serializable {
         this.naam = naam;
         this.adres = adres;
         this.omzet = omzet;
-        bieren = new ArrayList<>();
+        this.bieren = new LinkedHashSet<>();
     }
     
     public Brouwer(long brouwerNr, String naam, Adres adres, BigDecimal omzet) {
@@ -110,15 +120,15 @@ public class Brouwer implements Serializable {
     /**
      * @return the bieren
      */
-    public List<Bier> getBieren() {
-        return bieren;
+    public Set<Bier> getBieren() {
+        return Collections.unmodifiableSet(bieren);
     }
-
-    /**
-     * @param bieren the bieren to set
-     */
-    public void setBieren(ArrayList<Bier> bieren) {
-        this.bieren = bieren;
+    
+    public void addBier(Bier bier) {
+    	bieren.add(bier);
+    	if (bier.getBrouwer() != this) {
+    		bier.setBrouwer(this);
+    	}
     }
 
     @Override
@@ -139,4 +149,11 @@ public class Brouwer implements Serializable {
         final Brouwer other = (Brouwer) obj;
         return Objects.equals(this.naam, other.naam);
     }
+
+	public void removeBier(Bier bier) {
+		if (bier.getBrouwer() == this) {
+    		bieren.remove(bier);
+    		bier.setBrouwer(null);
+    	}
+	}
 }

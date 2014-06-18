@@ -8,7 +8,9 @@ package be.vdab.web;
 
 import be.vdab.services.BierService;
 import be.vdab.valueobjects.Bestelbonlijn;
+
 import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;

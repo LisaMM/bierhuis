@@ -30,7 +30,6 @@
         <param-value>
             classpath:/spring/dao.xml
             classpath:/spring/services.xml
-            classpath:/spring/security.xml
         </param-value>
     </context-param>
 </web-app>

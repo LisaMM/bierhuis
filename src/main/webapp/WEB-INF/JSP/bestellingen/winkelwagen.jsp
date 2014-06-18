@@ -15,7 +15,7 @@
             href='${pageContext.servletContext.contextPath}/styles/default.css'>
     </head>
     <body>
-        <jsp:include page="nav.jsp"/>
+        <jsp:include page="/WEB-INF/JSP/nav.jsp"/>
         <h1>Winkelwagen</h1>
         <table>
             <thead>
