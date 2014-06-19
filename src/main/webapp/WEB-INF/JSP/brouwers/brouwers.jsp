@@ -6,6 +6,7 @@
 
 <%@page contentType='text/html' pageEncoding='UTF-8' session='false'%>
 <%@taglib prefix='c' uri='http://java.sun.com/jsp/jstl/core'%>
+<%@taglib prefix='spring' uri='http://www.springframework.org/tags'%>
 <!DOCTYPE html>
 <html lang="nl">
     <head>
@@ -18,9 +19,9 @@
         <h1>Brouwers</h1>
         <ul>
            <c:forEach items="${brouwers}" var="brouwer">
-                <li><c:url var="url" value="/brouwers">
-                    <c:param name="brouwerNr" value="${brouwer.brouwerNr}"/>
-                </c:url>
+                <li><spring:url var="url" value="/brouwers/{brouwerNr}">
+                    <spring:param name="brouwerNr" value="${brouwer.brouwerNr}"/>
+                </spring:url>
                 <a href="${url}">
                     ${brouwer.naam} (${brouwer.adres.gemeente})
                 </a><li>

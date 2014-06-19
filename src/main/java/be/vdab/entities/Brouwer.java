@@ -29,7 +29,7 @@ public class Brouwer implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue
-    private long brouwerNr;
+    private long brouwernr;
     @NotNull
     @Size(min = 1, max = 50, message = "{Size.tekst}")
     private String naam;
@@ -53,21 +53,21 @@ public class Brouwer implements Serializable {
     
     public Brouwer(long brouwerNr, String naam, Adres adres, BigDecimal omzet) {
         this(naam, adres, omzet);
-        this.brouwerNr = brouwerNr;
+        this.brouwernr = brouwerNr;
     }
 
     /**
      * @return the brouwerNr
      */
     public long getBrouwerNr() {
-        return brouwerNr;
+        return brouwernr;
     }
 
     /**
      * @param brouwerNr the brouwerNr to set
      */
     public void setBrouwerNr(long brouwerNr) {
-        this.brouwerNr = brouwerNr;
+        this.brouwernr = brouwerNr;
     }
 
     /**
@@ -114,7 +114,7 @@ public class Brouwer implements Serializable {
     
     @Override
     public String toString(){
-        return String.format("%s:%d", naam, brouwerNr);
+        return String.format("%s:%d", naam, brouwernr);
     }
 
     /**

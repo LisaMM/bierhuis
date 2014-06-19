@@ -7,8 +7,11 @@
 package be.vdab.valueobjects;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
 import javax.validation.constraints.*;
+
+import be.vdab.entities.*;
 /**
  *
  * @author dev13
@@ -19,11 +22,19 @@ public class Bestelbonlijn implements Serializable {
     @NotNull
     @Min(1)
     private int aantal;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "biernr")
+    private Bier bier;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "bonnr")
+    private Bestelbon bestelbon;
     
     public Bestelbonlijn() {}
     
-    public Bestelbonlijn(int aantal) {
+    public Bestelbonlijn(int aantal, Bier bier, Bestelbon bestelbon) {
         this.aantal = aantal;
+        this.bier = bier;
+        this.bestelbon = bestelbon;
     }
 
     /**
@@ -32,4 +43,12 @@ public class Bestelbonlijn implements Serializable {
     public int getAantal() {
         return aantal;
     }
+
+	public Bier getBier() {
+		return bier;
+	}
+
+	public Bestelbon getBestelbon() {
+		return bestelbon;
+	}
 }

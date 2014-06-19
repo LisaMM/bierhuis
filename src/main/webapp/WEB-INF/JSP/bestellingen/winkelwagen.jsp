@@ -17,37 +17,48 @@
     <body>
         <jsp:include page="/WEB-INF/JSP/nav.jsp"/>
         <h1>Winkelwagen</h1>
-        <table>
-            <thead>
-                <tr>
-                    <th>Bier</th>
-                    <th>Prijs</th>
-                    <th>Aantal</th>
-                    <th>Te betalen</th>
-                </tr>
-            </thead>
-            <tbody>
-                <c:forEach items="bestelbonlijnen" var="lijn">
-                    <tr>
-                        <td>${lijn.bier.naam}</td>
-                    </tr>
-                    <tr>
-                        <td>${lijn.bier.prijs}</td>
-                    </tr>
-                    <tr>
-                        <td>${lijn.aantal}</td>
-                    </tr>
-                    <tr>
-                        <td>${lijn.bier.prijs * lijn.aantal}</td>
-                    </tr>
-                </c:forEach>
-            </tbody>
-            <tfoot>
-                Totaal: ${totaal}
-            </tfoot>
-        </table>
-        <c:url value="/bestellingen" var="url"/>
-        <form:form method="post" action="${url}" id="bestelform">
+        <c:choose>
+	        <c:when test="${not empty bestelbonlijnen}">
+		        <table>
+		            <thead>
+		                <tr>
+		                    <th>Bier</th>
+		                    <th>Prijs</th>
+		                    <th>Aantal</th>
+		                    <th>Te betalen</th>
+		                </tr>
+		            </thead>
+		            <tbody>
+		                <c:forEach items="bestelbonlijnen" var="lijn">
+		                    <tr>
+		                        <td>${lijn.bier.naam}</td>
+		                    </tr>
+		                    <tr>
+		                        <td>${lijn.bier.prijs}</td>
+		                    </tr>
+		                    <tr>
+		                        <td>${lijn.aantal}</td>
+		                    </tr>
+		                    <tr>
+		                        <td>${lijn.bier.prijs * lijn.aantal}</td>
+		                    </tr>
+		                </c:forEach>
+		            </tbody>
+		            <tfoot>
+		            	<tr>
+			            	<td>
+			                	Totaal: ${totaal}
+		                	</td>
+	                	</tr>
+		            </tfoot>
+		        </table>
+	        </c:when>
+	        <c:otherwise>
+	        	<p>U hebt momenteel nog geen bestellingen.</p>
+	        </c:otherwise>
+        </c:choose>
+        <c:url value="/bestellingen/winkelwagen" var="url"/>
+        <form:form method="post" action="${url}" id="bestelform" commandName="bestelbon">
             <form:label path='naam'>Naam:
             <form:errors path='naam' cssClass='fout'/></form:label>
             <form:input path='naam' autofocus='autofocus'/>

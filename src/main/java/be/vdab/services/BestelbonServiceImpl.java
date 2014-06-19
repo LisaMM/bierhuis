@@ -12,14 +12,14 @@ import be.vdab.entities.Bestelbon;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.*;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author dev13
  */
 @Service
-@Transactional(readOnly = true,isolation = Isolation.READ_COMMITTED)
+@Transactional(readOnly = true)
 public class BestelbonServiceImpl implements BestelbonService {
     private final BestelbonDAO bestelbonDAO;
     

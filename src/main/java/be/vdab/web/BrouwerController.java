@@ -36,8 +36,8 @@ class BrouwerController {
             brouwerService.findAll());
     }
     
-    @RequestMapping(method = RequestMethod.GET, params="brouwerNr")
-    public ModelAndView read(@RequestParam long brouwerNr) {
+    @RequestMapping(method = RequestMethod.GET, value = "{brouwerNr}")
+    public ModelAndView read(@PathVariable long brouwerNr) {
         ModelAndView mav = new ModelAndView("brouwers/brouwer", "brouwer", 
         		brouwerService.read(brouwerNr));
         mav.addObject("bieren", bierService.findByBrouwerNrLike(brouwerNr));
