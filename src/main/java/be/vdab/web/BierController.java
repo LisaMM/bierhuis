@@ -6,6 +6,8 @@
 
 package be.vdab.web;
 
+import java.math.BigDecimal;
+
 import be.vdab.entities.Bestelbon;
 import be.vdab.services.BierService;
 import be.vdab.valueobjects.Bestelbonlijn;
@@ -58,6 +60,15 @@ class BierController {
 				new Bestelbonlijn(aantal, bierService.read(bierNr), bon);
 			bon.addBestelbonlijn(bestelbonlijn);
 			mav.addObject("bestelbon", bon);
+			Iterable<Bestelbonlijn> lijnen = bon.getBestelbonlijnen();		   	
+			mav.addObject("bestelbonlijnen", lijnen);
+			BigDecimal totaal = BigDecimal.ZERO;
+	    	if (lijnen != null) {
+		    	for (Bestelbonlijn lijn : lijnen) {
+		    		totaal = totaal.add(lijn.getBier().getPrijs().multiply(new BigDecimal(lijn.getAantal())));
+		    	}
+	    	}
+	    	mav.addObject("totaal", totaal);
 		} else {
 			mav = new ModelAndView("bieren/bier", "bier",
 				bierService.read(bierNr));

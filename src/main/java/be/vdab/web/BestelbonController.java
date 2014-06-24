@@ -27,7 +27,7 @@ public class BestelbonController {
     
     @Autowired
     public BestelbonController(BestelbonService bestelbonService, 
-    		Winkelwagen winkelwagen) {
+		Winkelwagen winkelwagen) {
         this.bestelbonService = bestelbonService;
         this.winkelwagen = winkelwagen;
     }
@@ -58,11 +58,23 @@ public class BestelbonController {
     	ModelAndView mav;
         if (! bindingResult.hasErrors() && bestelbon.getBestelbonlijnen() != null) {
             bestelbonService.create(bestelbon);
+//            for (Bestelbonlijn lijn : bestelbon.getBestelbonlijnen()) {
+//            	bestelbonlijnService.create(lijn);
+//            }
             mav = new ModelAndView("bestellingen/bevestiging", "bestelbon", bestelbon);
             mav.addObject("bonNr", bestelbon.getBonNr());
             session.removeAttribute("winkelwagen");
         } else {
         	mav = new ModelAndView("bestellingen/winkelwagen", "bestelbon", bestelbon);
+        	Iterable<Bestelbonlijn> lijnen = bestelbon.getBestelbonlijnen();		   	
+        	BigDecimal totaal = BigDecimal.ZERO;
+        	if (lijnen != null) {
+    	    	for (Bestelbonlijn lijn : lijnen) {
+    	    		totaal = totaal.add(lijn.getBier().getPrijs().multiply(new BigDecimal(lijn.getAantal())));
+    	    	}
+        	}
+            mav.addObject("bestelbonlijnen", lijnen);
+            mav.addObject("totaal", totaal);
         }
         return mav;
     }
