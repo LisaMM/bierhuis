@@ -34,7 +34,7 @@ public class Adres implements Serializable {
     @Size(min = 1, max = 50, message = "{Size.tekst}")
     private String gemeente;
     
-    protected Adres() {}
+    public Adres() {}
 
     public Adres(String straat,String huisNr,Integer postcode,String gemeente) {
         this.straat = straat;
@@ -79,28 +79,28 @@ public class Adres implements Serializable {
     /**
      * @param straat the straat to set
      */
-    protected void setStraat(String straat) {
+    public void setStraat(String straat) {
         this.straat = straat;
     }
 
     /**
      * @param huisNr the huisNr to set
      */
-    protected void setHuisNr(String huisNr) {
+    public void setHuisNr(String huisNr) {
         this.huisNr = huisNr;
     }
 
     /**
      * @param postcode the postcode to set
      */
-    protected void setPostcode(Integer postcode) {
+    public void setPostcode(Integer postcode) {
         this.postcode = postcode;
     }
 
     /**
      * @param gemeente the gemeente to set
      */
-    protected void setGemeente(String gemeente) {
+    public void setGemeente(String gemeente) {
         this.gemeente = gemeente;
     }
 

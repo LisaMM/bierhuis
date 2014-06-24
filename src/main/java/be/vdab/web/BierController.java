@@ -11,7 +11,6 @@ import be.vdab.services.BierService;
 import be.vdab.valueobjects.Bestelbonlijn;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +22,6 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 @RequestMapping("/bieren")
-@SessionAttributes("bestelbonlijnen")
 class BierController {
 	private final BierService bierService;
 	private final Winkelwagen winkelwagen;
@@ -36,13 +34,15 @@ class BierController {
 
 	@RequestMapping(value = "{bierNr}", method = RequestMethod.GET)
 	public ModelAndView createForm(@PathVariable long bierNr) {
-		return new ModelAndView("bieren/bier", "bier",
+		ModelAndView mav = new ModelAndView("bieren/bier", "bier",
 				bierService.read(bierNr));
+		mav.addObject("bestelbonlijn", new Bestelbonlijn());
+		return mav;
 	}
 
-	@RequestMapping(method = RequestMethod.GET, params = { "biernr", "aantal" })
-	public ModelAndView toevoegenAanBon(@Param("aantal") int aantal, 
-			@Param("bierNr") long bierNr, BindingResult bindingResult) {
+	@RequestMapping(method = RequestMethod.GET, params = { "bier.bierNr", "aantal" })
+	public ModelAndView toevoegenAanBon(@ModelAttribute("aantal") int aantal, 
+			@ModelAttribute("bier.bierNr") Long bierNr, BindingResult bindingResult) {
 		ModelAndView mav;
 		if (!bindingResult.hasErrors() && aantal <= 1) {
 			bindingResult.reject("foutAantal", new Object[] { aantal }, "");
@@ -57,9 +57,12 @@ class BierController {
 			Bestelbonlijn bestelbonlijn = 
 				new Bestelbonlijn(aantal, bierService.read(bierNr), bon);
 			bon.addBestelbonlijn(bestelbonlijn);
+			mav.addObject("bestelbon", bon);
 		} else {
 			mav = new ModelAndView("bieren/bier", "bier",
 				bierService.read(bierNr));
+			mav.addObject("bestelbonlijn", new Bestelbonlijn());
+			mav.addObject("error", "Vul een geheel getal groter dan 1 in");
 		}
 		return mav;
 	}

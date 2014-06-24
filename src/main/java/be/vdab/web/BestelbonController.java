@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package be.vdab.web;
 
 import java.math.BigDecimal;
@@ -12,6 +6,7 @@ import be.vdab.entities.Bestelbon;
 import be.vdab.services.BestelbonService;
 import be.vdab.valueobjects.Bestelbonlijn;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,13 +33,13 @@ public class BestelbonController {
     }
     
     @RequestMapping(value="winkelwagen", method = RequestMethod.GET)
-    public ModelAndView findAllLijnen(@Valid Bestelbon bestelbon, BindingResult bindingResult) {
-    	Bestelbon bon = winkelwagen.getBestelbon();
-    	if (bon == null) {
-    		bon = new Bestelbon();
-    		winkelwagen.setBestelbon(bon);
+    public ModelAndView findAllLijnen() {
+    	Bestelbon bestelbon = winkelwagen.getBestelbon();
+    	if (bestelbon == null) {
+    		bestelbon = new Bestelbon();
+    		winkelwagen.setBestelbon(bestelbon);
     	}
-    	Iterable<Bestelbonlijn> lijnen = bon.getBestelbonlijnen();		   	
+    	Iterable<Bestelbonlijn> lijnen = bestelbon.getBestelbonlijnen();		   	
     	BigDecimal totaal = BigDecimal.ZERO;
     	if (lijnen != null) {
 	    	for (Bestelbonlijn lijn : lijnen) {
@@ -52,7 +47,23 @@ public class BestelbonController {
 	    	}
     	}
         ModelAndView mav = new ModelAndView("bestellingen/winkelwagen", "bestelbonlijnen", lijnen);
+        mav.addObject("bestelbon", bestelbon);
         mav.addObject("totaal", totaal);
+        return mav;
+    }
+    
+    @RequestMapping(value = "winkelwagen", method = RequestMethod.POST)
+    public ModelAndView create(@Valid Bestelbon bestelbon, BindingResult bindingResult,
+		HttpSession session) {
+    	ModelAndView mav;
+        if (! bindingResult.hasErrors() && bestelbon.getBestelbonlijnen() != null) {
+            bestelbonService.create(bestelbon);
+            mav = new ModelAndView("bestellingen/bevestiging", "bestelbon", bestelbon);
+            mav.addObject("bonNr", bestelbon.getBonNr());
+            session.removeAttribute("winkelwagen");
+        } else {
+        	mav = new ModelAndView("bestellingen/winkelwagen", "bestelbon", bestelbon);
+        }
         return mav;
     }
     
@@ -70,14 +81,5 @@ public class BestelbonController {
     public ModelAndView bevestiging() {
         return new ModelAndView("bestellingen/bevestiging", 
     		"bonNr", winkelwagen.getBestelbon().getBonNr());
-    }
-    
-    @RequestMapping(value = "winkelwagen", method = RequestMethod.POST)
-    public String create(@Valid Bestelbon bestelbon, BindingResult bindingResult) {
-        if (! bindingResult.hasErrors() && bestelbon.getBestelbonlijnen() != null) {
-            bestelbonService.create(bestelbon);
-            return "bestellingen/bevestiging";
-        }
-        return "bestellingen/winkelwagen";
     }
 }

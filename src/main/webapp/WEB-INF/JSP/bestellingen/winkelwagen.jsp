@@ -29,17 +29,11 @@
 		                </tr>
 		            </thead>
 		            <tbody>
-		                <c:forEach items="bestelbonlijnen" var="lijn">
+		                <c:forEach items="${bestelbonlijnen}" var="lijn">
 		                    <tr>
 		                        <td>${lijn.bier.naam}</td>
-		                    </tr>
-		                    <tr>
 		                        <td>${lijn.bier.prijs}</td>
-		                    </tr>
-		                    <tr>
 		                        <td>${lijn.aantal}</td>
-		                    </tr>
-		                    <tr>
 		                        <td>${lijn.bier.prijs * lijn.aantal}</td>
 		                    </tr>
 		                </c:forEach>

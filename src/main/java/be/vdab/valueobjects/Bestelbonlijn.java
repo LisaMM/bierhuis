@@ -51,4 +51,8 @@ public class Bestelbonlijn implements Serializable {
 	public Bestelbon getBestelbon() {
 		return bestelbon;
 	}
+	
+	public void setBier(Bier bier) {
+		this.bier = bier;
+	}
 }

@@ -22,11 +22,11 @@
 	            <h1>${bier.naam}</h1>
 	            <p>
 	                <label>Alcohol</label>
-	                <br/>${bier.alcohol}
+	                <br/>${bier.alcohol} %
                 </p>
                 <p>
 	                <label>Prijs</label>
-	                <br/>${bier.prijs}
+	                <br/>€ ${bier.prijs}
                 </p>
                 <p>
 	                <label>Soort</label>
@@ -41,9 +41,10 @@
 	 	            <form:label path='aantal'>Aantal:
 	            	<form:errors path='aantal' cssClass='fout'/></form:label>
 	            	<form:input path='aantal' autofocus='autofocus'/>
-	                <form:input type="hidden" path="biernr" value="${bier.bierNr}"/>
+	                <form:input type="hidden" path="bier.bierNr" value="${bier.bierNr}"/>
 	                <input type="submit" value="Toevoegen" id="toevoegknop"/> 
 	            </form:form>
+	            <span class="fout">${error}</span>
  	            <script>
 	                document.getElementById('toevoegform').onsubmit= function() {
 	                    document.getElementById('toevoegknop').disabled=true;
