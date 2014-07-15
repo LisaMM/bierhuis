@@ -15,6 +15,6 @@
     </head>
     <body>
         <jsp:include page="/WEB-INF/JSP/nav.jsp"/>
-        <h1>Je winkelwagentje is bevestigd als bestelbon ${bestelbon.bonNr}</h1>
+        <h1>Je winkelwagentje is bevestigd als bestelbon ${bonNr}</h1>
     </body>
 </html>

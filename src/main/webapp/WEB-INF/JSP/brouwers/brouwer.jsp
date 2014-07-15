@@ -20,14 +20,16 @@
 	        <c:when test="${not empty brouwer}">
 	            <h1>${brouwer.naam} (${brouwer.adres.gemeente})</h1>
 	            <ul>
-	                <li><c:forEach items="${brouwer.bieren}" var="bier">
-	                    <spring:url var="url" value="/bieren/{bierNr}">
-	                        <spring:param name="bierNr" value="${bier.bierNr}"/>
-	                    </spring:url>
-	                    <a href="${url}">
-	                        ${bier.naam})
-	                    </a>
-	                </c:forEach></li>
+	            	<c:forEach items="${brouwer.bieren}" var="bier">
+                    	<li>
+	                    	<spring:url var="url" value="/bieren/{bierNr}">
+		                        <spring:param name="bierNr" value="${bier.bierNr}"/>
+		                    </spring:url>
+		                    <a href="${url}">
+		                        ${bier.naam}
+		                    </a>
+	                    </li>
+	                </c:forEach>
 	            </ul>
 	        </c:when>
 	        <c:otherwise>

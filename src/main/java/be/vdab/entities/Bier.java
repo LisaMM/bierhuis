@@ -33,7 +33,7 @@ public class Bier implements Serializable {
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "brouwerNr")
     private Brouwer brouwer;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "soortNr")
     private Soort soort;
     @NumberFormat(style = Style.PERCENT)

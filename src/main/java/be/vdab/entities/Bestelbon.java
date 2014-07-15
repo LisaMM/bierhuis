@@ -37,7 +37,9 @@ public class Bestelbon implements Serializable {
     	joinColumns = @JoinColumn(name = "bonNr"))
     private Set<Bestelbonlijn> bestelbonlijnen;
     
-    public Bestelbon() {}
+    public Bestelbon() {
+    	this.bestelbonlijnen = new LinkedHashSet<>();
+    }
     
     public Bestelbon(String naam, Adres adres) {
         this.naam = naam;
@@ -96,7 +98,7 @@ public class Bestelbon implements Serializable {
      * @return the bestelbonlijnen
      */
     public Set<Bestelbonlijn> getBestelbonlijnen() {
-        return Collections.unmodifiableSet(bestelbonlijnen);
+        return bestelbonlijnen;
     }
     
     public void addBestelbonlijn(Bestelbonlijn lijn) {

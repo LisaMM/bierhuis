@@ -12,12 +12,14 @@ import be.vdab.entities.Bier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author dev13
  */
 @Service
+@Transactional(readOnly = true)
 public class BierServiceImpl implements BierService {
     private final BierDAO bierDAO;
     
@@ -43,6 +45,6 @@ public class BierServiceImpl implements BierService {
 
 	@Override
 	public Iterable<Bier> findByBrouwerNrLike(long brouwerNr) {
-		return bierDAO.findByBrouwerLike(brouwerNr);
+		return bierDAO.findByBrouwerBrouwernrLikeOrderByNaamAsc(brouwerNr);
 	}
 }

@@ -7,6 +7,7 @@
 <%@page contentType='text/html' pageEncoding='UTF-8' session='false'%>
 <%@taglib prefix='c' uri='http://java.sun.com/jsp/jstl/core'%>
 <%@taglib prefix='form' uri='http://www.springframework.org/tags/form'%>
+<%@taglib prefix='spring' uri='http://www.springframework.org/tags'%>
 <!DOCTYPE html>
 <html lang="nl">
     <head>
@@ -21,22 +22,30 @@
 	            <h1>${bier.naam}</h1>
 	            <p>
 	                <label>Alcohol</label>
-	                ${bier.alcohol}
+	                <br/>${bier.alcohol} %
+                </p>
+                <p>
 	                <label>Prijs</label>
-	                ${bier.prijs}
+	                <br/>€ ${bier.prijs}
+                </p>
+                <p>
 	                <label>Soort</label>
-	                ${bier.soort}
+	                <br/>${bier.soort.naam}
+                </p>
+                <p>
 	                <label>Brouwer</label>
-	                ${bier.brouwer}
+	                <br/>${bier.brouwer.naam}
 	            </p>
-	            <c:url value="/bestellingen/winkelwagen" var="url"/>
-	            <form:form method="get" action='${url}' id="toevoegform">
-	                <form:label path="aantal">Aantal
-	                <form:errors path='aantal' cssClass='fout'/></form:label>
-	                <form:input path="aantal" type="number" autofocus="autofocus"/>
-	                <input type="submit" value="Toevoegen" id="toevoegknop"/>
+            	<c:url var="url" value="/bieren"/>
+ 	            <form:form method="get" action='${url}' id="toevoegform" commandName="bestelbonlijn">
+	 	            <form:label path='aantal'>Aantal:
+	            	<form:errors path='aantal' cssClass='fout'/></form:label>
+	            	<form:input path='aantal' autofocus='autofocus'/>
+	                <form:input type="hidden" path="bier.bierNr" value="${bier.bierNr}"/>
+	                <input type="submit" value="Toevoegen" id="toevoegknop"/> 
 	            </form:form>
-	            <script>
+	            <span class="fout">${error}</span>
+ 	            <script>
 	                document.getElementById('toevoegform').onsubmit= function() {
 	                    document.getElementById('toevoegknop').disabled=true;
 	                };

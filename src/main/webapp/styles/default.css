@@ -15,6 +15,7 @@ dd {
 
 label {
 	cursor:pointer;
+	font-weight:bold;
 }
 
 input {

@@ -15,5 +15,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author dev13
  */
 public interface BierDAO extends JpaRepository<Bier, Long> {
-    Iterable<Bier> findByBrouwerLike(long brouwerNr);
+    Iterable<Bier> findByBrouwerBrouwernrLikeOrderByNaamAsc(long brouwerNr);
 }
