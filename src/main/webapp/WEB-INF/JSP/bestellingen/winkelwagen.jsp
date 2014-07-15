@@ -43,7 +43,7 @@
                 </c:forEach>
             </tbody>
             <tfoot>
-                Totaal: ${totaal}
+                <tr><td>Totaal: ${totaal}</td></tr>
             </tfoot>
         </table>
         <c:url value="/bestellingen" var="url"/>
