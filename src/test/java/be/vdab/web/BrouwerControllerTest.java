@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package be.vdab.web;
 
 import be.vdab.entities.Brouwer;
@@ -20,17 +14,14 @@ import org.mockito.Mockito;
  */
 public class BrouwerControllerTest {
     private BrouwerController brouwerController;
-    private BrouwerService brouwerService;
     private Iterable<Brouwer> brouwers;
     private Brouwer brouwer;
-    private BierService bierService;
-    
+
     @Before
     public void setUp() {
         brouwers = Collections.emptyList();
-        Collections.emptyList();
-        brouwerService = Mockito.mock(BrouwerService.class);
-        bierService = Mockito.mock(BierService.class);
+        BrouwerService brouwerService = Mockito.mock(BrouwerService.class);
+        BierService bierService = Mockito.mock(BierService.class);
         Mockito.when(brouwerService.findAll()).thenReturn(brouwers);
         brouwerController = new BrouwerController(brouwerService, bierService);
         brouwer = new Brouwer("naam1", new Adres("straat1", "huisnr1", 1, 

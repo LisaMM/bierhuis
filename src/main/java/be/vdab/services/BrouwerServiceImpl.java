@@ -20,11 +20,11 @@ public class BrouwerServiceImpl implements BrouwerService {
 
     @Override
     public Iterable<Brouwer> findAll() {
-        return brouwerDAO.findAll(new Sort("naam"));
+        return brouwerDAO.findAll(Sort.by("naam"));
     }
 
     @Override
     public Brouwer read(long brouwerNr) {
-        return brouwerDAO.findOne(brouwerNr);
+        return brouwerDAO.getOne(brouwerNr);
     }
 }

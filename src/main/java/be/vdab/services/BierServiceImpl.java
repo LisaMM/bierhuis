@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package be.vdab.services;
 
 import be.vdab.dao.BierDAO;
@@ -30,7 +24,7 @@ public class BierServiceImpl implements BierService {
 
     @Override
     public Iterable<Bier> findAll() {
-        return bierDAO.findAll(new Sort("naam"));
+        return bierDAO.findAll(Sort.by("naam"));
     }
 
     @Override
@@ -40,7 +34,7 @@ public class BierServiceImpl implements BierService {
 
     @Override
     public Bier read(long bierNr) {
-        return bierDAO.findOne(bierNr);
+        return bierDAO.getOne(bierNr);
     }
 
 	@Override

@@ -1,4 +1,4 @@
-bierhuis
+Bierhuis
 ========
 
 Oefening Bierhuis

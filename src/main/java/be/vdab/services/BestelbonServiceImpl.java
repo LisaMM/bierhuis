@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package be.vdab.services;
 
 import be.vdab.dao.BestelbonDAO;
@@ -29,7 +23,7 @@ public class BestelbonServiceImpl implements BestelbonService {
     }
 
     @Override
-    @Transactional(readOnly = false)
+    @Transactional()
     public void create(Bestelbon bon) {
         try {
             bestelbonDAO.save(bon);
@@ -40,11 +34,11 @@ public class BestelbonServiceImpl implements BestelbonService {
 
     @Override
     public Bestelbon read(long bonNr) {
-        return bestelbonDAO.findOne(bonNr);
+        return bestelbonDAO.getOne(bonNr);
     }
 
     @Override
-    @Transactional(readOnly = false)
+    @Transactional()
     public void update(Bestelbon bon) {
         bestelbonDAO.save(bon);
     }

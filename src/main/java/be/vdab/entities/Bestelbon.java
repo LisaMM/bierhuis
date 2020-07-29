@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package be.vdab.entities;
 
 import be.vdab.valueobjects.*;
@@ -35,7 +29,7 @@ public class Bestelbon implements Serializable {
     @ElementCollection
     @CollectionTable(name = "bestelbonlijnen", 
     	joinColumns = @JoinColumn(name = "bonNr"))
-    private Set<Bestelbonlijn> bestelbonlijnen;
+    private final Set<Bestelbonlijn> bestelbonlijnen;
     
     public Bestelbon() {
     	this.bestelbonlijnen = new LinkedHashSet<>();
